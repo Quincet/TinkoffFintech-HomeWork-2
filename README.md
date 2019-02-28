@@ -7,10 +7,10 @@
 mvn exec:java  
 После чего будет произведен запуск программы
 
-Переменные среды:
-JAVA_HOME : C:\Program Files\Java\jdk1.8.0_112
-JDK_HOME : %JAVA_HOME%
-JRE_HOME : %JAVA_HOME%\jre
-CLASSPATH : .;%JAVA_HOME%\lib;%JAVA_HOME%\jre\lib
-PATH : %JAVA_HOME%\bin
-PATH : С:\Maven\bin
+Переменные среды:  
+JAVA_HOME : C:\Program Files\Java\jdk1.8.0_112  
+JDK_HOME : %JAVA_HOME%  
+JRE_HOME : %JAVA_HOME%\jre  
+CLASSPATH : .;%JAVA_HOME%\lib;%JAVA_HOME%\jre\lib  
+PATH : %JAVA_HOME%\bin  
+PATH : С:\Maven\bin  
