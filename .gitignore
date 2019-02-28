@@ -1,0 +1,6 @@
+.idea/
+idea/
+*iml/
+.idea/**/contentModel.xml
+atlassian-ide-plugin.xml
+out
