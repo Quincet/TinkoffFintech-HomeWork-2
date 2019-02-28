@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-class PdfCreator {
+public class PdfCreator {
     private String path;
     private Font font;
     private SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.forLanguageTag("ru"));

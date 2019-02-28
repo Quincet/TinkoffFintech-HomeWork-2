@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-class ExcelCreator {
+public class ExcelCreator {
     private SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.forLanguageTag("ru"));
     private String path;
 

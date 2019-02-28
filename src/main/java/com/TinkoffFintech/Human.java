@@ -5,7 +5,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
-class Human {
+final public class Human {
     private String name;
     private String surname;
     private String patronymic;
