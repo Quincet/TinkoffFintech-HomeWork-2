@@ -4,3 +4,5 @@ idea/
 .idea/**/contentModel.xml
 atlassian-ide-plugin.xml
 out
+.gitignore
+.gitattributes
