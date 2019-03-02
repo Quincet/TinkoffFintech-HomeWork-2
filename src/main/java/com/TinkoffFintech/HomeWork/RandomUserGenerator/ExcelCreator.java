@@ -1,4 +1,4 @@
-package com.TinkoffFintech;
+package com.TinkoffFintech.HomeWork.RandomUserGenerator;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class ExcelCreator {
+public class ExcelCreator{
     private SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.forLanguageTag("ru"));
     private String path;
 
@@ -18,7 +18,7 @@ public class ExcelCreator {
         this.path = path;
     }
 
-    public HSSFSheet fillRow(Human user, Integer numberUser, HSSFSheet sheet){
+    public void fillRow(Human user, Integer numberUser, HSSFSheet sheet){
         HSSFRow row = sheet.createRow(numberUser);
         row.createCell(0).setCellValue(numberUser);
         row.createCell(1).setCellValue(user.getName());
@@ -35,7 +35,6 @@ public class ExcelCreator {
         row.createCell(12).setCellValue(user.getStreet());
         row.createCell(13).setCellValue(user.getHouse());
         row.createCell(14).setCellValue(user.getApartment());
-        return sheet;
     }
     public HSSFWorkbook prepareSheet(){
         HSSFWorkbook workbook = new HSSFWorkbook();
@@ -58,12 +57,14 @@ public class ExcelCreator {
         rowhead.createCell(14).setCellValue("Квартира");
         return workbook;
     }
-    public void createXlsFile(HSSFWorkbook workbook) throws IOException {
+    public void createXlsFile(HSSFWorkbook workbook) throws IOException{
         String fileName = path + "Users.xls";
-        FileOutputStream fileOut = new FileOutputStream(fileName);
-        workbook.write(fileOut);
-        fileOut.close();
-        workbook.close();
-        System.out.println("Эксель файл с данными людей был создан по пути = " + Paths.get(fileName).toAbsolutePath());
+        try(FileOutputStream fileOut = new FileOutputStream(fileName)) {
+            workbook.write(fileOut);
+            System.out.println("Эксель файл с данными людей был создан по пути = " + Paths.get(fileName).toAbsolutePath());
+        }
+        finally {
+            workbook.close();
+        }
     }
 }

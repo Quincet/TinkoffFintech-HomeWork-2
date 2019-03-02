@@ -1,11 +1,15 @@
-package com.TinkoffFintech;
+package com.TinkoffFintech.HomeWork.RandomUserGenerator;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
-final public class Human {
+@NoArgsConstructor
+public class Human {
     private String name;
     private String surname;
     private String patronymic;
@@ -37,6 +41,10 @@ final public class Human {
         this.apartment = apartment;
         this.age = getAge(dataBirth);
         this.inn = generateINN();
+    }
+
+    public static HumanBuilder createBuilder(){
+        return new HumanBuilder();
     }
 
     private String generateINN(){

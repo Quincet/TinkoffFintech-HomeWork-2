@@ -1,28 +1,33 @@
-package com.TinkoffFintech;
+package com.TinkoffFintech.HomeWork.RandomUserGenerator;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfPTable;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import java.io.*;
+
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
-public class Main  {
-    private static String pathName = System.getProperty("user.dir") + File.separator + "resources" + File.separator;
-    private static Random rnd = new Random();
-    private static List<String> namesM,namesF,surnamesF,surnamesM,patronymicsM,patronymicsF,countries,regions,cities,streets;
+public class HumanGenerator {
+    private String pathName = System.getProperty("user.dir") + File.separator + "resources" + File.separator;
+    private Random rnd = new Random();
+    private List<String> namesM,namesF,surnamesF,surnamesM,patronymicsM,patronymicsF,countries,regions,cities,streets;
 
-    public static void main(String[] args){
+    public void createUsers(){
         try {
             if (!new File(pathName).exists()) {
                 System.out.println("Нет папки с ресурсами для работы программы");
                 return;
             }
             readResourceFiles();
-            int randomUsers = rnd.nextInt(29) + 1;
+            int randomUsers = rnd.nextInt(150) + 30;
             ExcelCreator excelCreator = new ExcelCreator(pathName);
             PdfCreator pdfCreator = new PdfCreator(pathName);
             PdfPTable pdfPTable = pdfCreator.prepareTable();
@@ -43,7 +48,7 @@ public class Main  {
             System.out.println("Вызвано неизвестное исключение = " + unknownException.getMessage());
         }
     }
-    public static Human generateUser() {
+    private Human generateUser() {
         boolean gender = rnd.nextBoolean();
         int yearBirth = rnd.nextInt(55) + 1950;
         int monthBirth = rnd.nextInt(12);
@@ -60,9 +65,11 @@ public class Main  {
         int house = rnd.nextInt(200);
         int apartment = rnd.nextInt(99);
         int index = rnd.nextInt(100000) + 100000;
-        return new Human(name,surName,patronymic,gender,dateBirth,index,country,region,city,street,house,apartment);
+        return Human.createBuilder().setName(name).setSurname(surName).setPatronymic(patronymic).setGender(gender)
+                .setDataBirth(dateBirth).setIndex(index).setCountry(country).setRegion(region).setCity(city)
+                .setStreet(street).setHouse(house).setApartment(apartment).build();
     }
-    private static void readResourceFiles() throws IOException{
+    private void readResourceFiles() throws IOException{
         namesM = Files.lines(Paths.get(pathName + "Names.txt")).filter(x -> x.contains("Man")).map(x -> x.replace("Man|","")).collect(Collectors.toList());
         namesF = Files.lines(Paths.get(pathName + "Names.txt")).filter(x -> x.contains("Women")).map(x -> x.replace("Women|","")).collect(Collectors.toList());
         surnamesF = Files.lines(Paths.get(pathName + "SurNames.txt")).filter(x -> x.contains("Women")).map(x -> x.replace("Women|","")).collect(Collectors.toList());

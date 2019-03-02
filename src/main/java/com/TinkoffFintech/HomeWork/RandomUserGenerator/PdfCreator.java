@@ -1,4 +1,4 @@
-package com.TinkoffFintech;
+package com.TinkoffFintech.HomeWork.RandomUserGenerator;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
@@ -30,7 +30,7 @@ public class PdfCreator {
         document.close();
         System.out.println("PDF файл с данными людей был создан по пути = " + Paths.get(path).toAbsolutePath() + File.separator+ "Users.pdf");
     }
-    public PdfPTable fillTable(PdfPTable table,Human user, Integer numberUser){
+    public void fillTable(PdfPTable table,Human user, Integer numberUser){
         table.addCell(new Phrase(numberUser.toString(),font));
         table.addCell(new Phrase(user.getName(),font));
         table.addCell(new Phrase(user.getSurname(),font));
@@ -46,7 +46,6 @@ public class PdfCreator {
         table.addCell(new Phrase(user.getStreet(),font));
         table.addCell(new Phrase(user.getHouse().toString(),font));
         table.addCell(new Phrase(user.getApartment().toString(),font));
-        return table;
     }
     public PdfPTable prepareTable() throws IOException,DocumentException{
         BaseFont baseFont = BaseFont.createFont( path + "Roboto-Black.ttf",BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED);
