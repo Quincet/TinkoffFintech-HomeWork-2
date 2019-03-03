@@ -1,4 +1,4 @@
-package com.TinkoffFintech.HomeWork.RandomUserGenerator;
+package com.fintechtinkoff.homework.generateusers;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
@@ -22,13 +22,18 @@ public class PdfCreator {
         this.path = path;
     }
 
-    public void createPDFfile(PdfPTable table) throws FileNotFoundException, DocumentException {
-        Document document = new Document(PageSize.A1,10,10,10,10);
-        PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(path + "Users.pdf"));
-        document.open();
-        document.add(table);
-        document.close();
-        System.out.println("PDF файл с данными людей был создан по пути = " + Paths.get(path).toAbsolutePath() + File.separator+ "Users.pdf");
+    public void createPdfFile(PdfPTable table) throws DocumentException {
+        Document document = new Document(PageSize.A1, 10, 10, 10, 10);
+        try {
+            PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(path + "Users.pdf"));
+            document.open();
+            document.add(table);
+            document.close();
+            System.out.println("PDF файл с данными людей был создан по пути = " + Paths.get(path).toAbsolutePath() + File.separator + "Users.pdf");
+        } catch (FileNotFoundException fileEx){
+            System.out.println("При работе создания файла возникла ошибка, pdf файл не был создан");
+            document.close();
+        }
     }
     public void fillTable(PdfPTable table,Human user, Integer numberUser){
         table.addCell(new Phrase(numberUser.toString(),font));
@@ -39,7 +44,7 @@ public class PdfCreator {
         table.addCell(new Phrase(user.getGender() ? "Мужчина" : "Женщина",font));
         table.addCell(new Phrase(dataFormat.format(user.getDataBirth().getTime()),font));
         table.addCell(new Phrase(user.getInn(),font));
-        table.addCell(new Phrase(user.getIndex().toString(),font));
+        table.addCell(new Phrase(user.getIndex(),font));
         table.addCell(new Phrase(user.getCountry(),font));
         table.addCell(new Phrase(user.getRegion(),font));
         table.addCell(new Phrase(user.getCity(),font));

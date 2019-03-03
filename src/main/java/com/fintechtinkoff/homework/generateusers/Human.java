@@ -1,8 +1,7 @@
-package com.TinkoffFintech.HomeWork.RandomUserGenerator;
+package com.fintechtinkoff.homework.generateusers;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,7 +16,7 @@ public class Human {
     private String inn;
     private Boolean gender;
     private Calendar dataBirth;
-    private Integer index;
+    private String index;
     private String country;
     private String region;
     private String city;
@@ -25,7 +24,7 @@ public class Human {
     private Integer house;
     private Integer apartment;
 
-    public Human(String name,String surname,String patronymic,Boolean gender,Calendar dataBirth,Integer index,
+    public Human(String name,String surname,String patronymic,Boolean gender,Calendar dataBirth,String index,
                  String country,String region,String city,String street,Integer house,Integer apartment){
         this.name = name;
         this.surname = surname;
