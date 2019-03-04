@@ -1,6 +1,4 @@
-package com.TinkoffFintech.HomeWork.RandomUserGenerator;
-
-import lombok.NoArgsConstructor;
+package com.fintechtinkoff.homework.generateusers;
 
 import java.util.Calendar;
 
@@ -10,7 +8,7 @@ public class HumanBuilder {
     private String newPatronymic;
     private Boolean newGender;
     private Calendar newDataBirth;
-    private Integer newIndex;
+    private String newIndex;
     private String newCountry;
     private String newRegion;
     private String newCity;
@@ -44,7 +42,7 @@ public class HumanBuilder {
         return this;
     }
 
-    public HumanBuilder setIndex(Integer index) {
+    public HumanBuilder setIndex(String index) {
         this.newIndex = index;
         return this;
     }

@@ -1,4 +1,4 @@
-package com.TinkoffFintech.HomeWork.RandomUserGenerator;
+package com.fintechtinkoff.homework.generateusers;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -39,22 +39,22 @@ public class ExcelCreator{
     public HSSFWorkbook prepareSheet(){
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Humans");
-        HSSFRow rowhead = sheet.createRow((short)0);
-        rowhead.createCell(0).setCellValue("№");
-        rowhead.createCell(1).setCellValue("Имя");
-        rowhead.createCell(2).setCellValue("Фамилия");
-        rowhead.createCell(3).setCellValue("Отчество");
-        rowhead.createCell(4).setCellValue("Возраст");
-        rowhead.createCell(5).setCellValue("Пол");
-        rowhead.createCell(6).setCellValue("День Рождения");
-        rowhead.createCell(7).setCellValue("ИНН");
-        rowhead.createCell(8).setCellValue("Почтовый индекс");
-        rowhead.createCell(9).setCellValue("Страна");
-        rowhead.createCell(10).setCellValue("Область");
-        rowhead.createCell(11).setCellValue("Город");
-        rowhead.createCell(12).setCellValue("Улица");
-        rowhead.createCell(13).setCellValue("Дом");
-        rowhead.createCell(14).setCellValue("Квартира");
+        HSSFRow rowHead = sheet.createRow((short)0);
+        rowHead.createCell(0).setCellValue("№");
+        rowHead.createCell(1).setCellValue("Имя");
+        rowHead.createCell(2).setCellValue("Фамилия");
+        rowHead.createCell(3).setCellValue("Отчество");
+        rowHead.createCell(4).setCellValue("Возраст");
+        rowHead.createCell(5).setCellValue("Пол");
+        rowHead.createCell(6).setCellValue("День Рождения");
+        rowHead.createCell(7).setCellValue("ИНН");
+        rowHead.createCell(8).setCellValue("Почтовый индекс");
+        rowHead.createCell(9).setCellValue("Страна");
+        rowHead.createCell(10).setCellValue("Область");
+        rowHead.createCell(11).setCellValue("Город");
+        rowHead.createCell(12).setCellValue("Улица");
+        rowHead.createCell(13).setCellValue("Дом");
+        rowHead.createCell(14).setCellValue("Квартира");
         return workbook;
     }
     public void createXlsFile(HSSFWorkbook workbook) throws IOException{
@@ -62,8 +62,9 @@ public class ExcelCreator{
         try(FileOutputStream fileOut = new FileOutputStream(fileName)) {
             workbook.write(fileOut);
             System.out.println("Эксель файл с данными людей был создан по пути = " + Paths.get(fileName).toAbsolutePath());
-        }
-        finally {
+        } catch (IOException ioExcept){
+            System.out.println("При работе создания файла возникла ошибка, excel файл не был создан");
+        } finally {
             workbook.close();
         }
     }

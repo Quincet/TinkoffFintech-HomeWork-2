@@ -57,7 +57,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.TinkoffFintech.HomeWork.RandomUserGenerator.Main</mainClass>
+                    <mainClass>com.fintechtinkoff.homework.generateusers.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
