@@ -1,4 +1,4 @@
-package com.fintechtinkoff.homework.generateusers;
+package com.fintechtinkoff.homework.Generateusers;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -10,9 +10,9 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class ExcelCreator{
-    private SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.forLanguageTag("ru"));
-    private String path;
+final class ExcelCreator{
+    private final SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.forLanguageTag("ru"));
+    private final String path;
 
     public ExcelCreator(String path){
         this.path = path;

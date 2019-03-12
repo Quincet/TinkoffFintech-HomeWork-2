@@ -1,4 +1,4 @@
-package com.fintechtinkoff.homework.generateusers;
+package com.fintechtinkoff.homework.Generateusers;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
@@ -13,27 +13,28 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class PdfCreator {
-    private String path;
-    private Font font;
-    private SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.forLanguageTag("ru"));
+final class PdfCreator {
+    private final String path;
+    private final Font font;
+    private final SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.forLanguageTag("ru"));
 
-    public PdfCreator(String path){
+    public PdfCreator(String path)throws IOException,DocumentException{
         this.path = path;
+        font = new Font(BaseFont.createFont( path + "Roboto-Black.ttf",BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED),Font.DEFAULTSIZE,Font.NORMAL);
     }
 
-    public void createPdfFile(PdfPTable table) throws DocumentException {
+    public void createPdfFile(PdfPTable table) throws DocumentException,IOException {
         Document document = new Document(PageSize.A1, 10, 10, 10, 10);
-        try {
-            PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(path + "Users.pdf"));
+        try(FileOutputStream fileOutputStream = new FileOutputStream(path + "Users.pdf")) {
+            PdfWriter.getInstance(document, fileOutputStream);
             document.open();
             document.add(table);
             document.close();
             System.out.println("PDF файл с данными людей был создан по пути = " + Paths.get(path).toAbsolutePath() + File.separator + "Users.pdf");
         } catch (FileNotFoundException fileEx){
             System.out.println("При работе создания файла возникла ошибка, pdf файл не был создан");
-            document.close();
         }
+
     }
     public void fillTable(PdfPTable table,Human user, Integer numberUser){
         table.addCell(new Phrase(numberUser.toString(),font));
@@ -52,27 +53,25 @@ public class PdfCreator {
         table.addCell(new Phrase(user.getHouse().toString(),font));
         table.addCell(new Phrase(user.getApartment().toString(),font));
     }
-    public PdfPTable prepareTable() throws IOException,DocumentException{
-        BaseFont baseFont = BaseFont.createFont( path + "Roboto-Black.ttf",BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED);
-        font = new Font(baseFont,Font.DEFAULTSIZE,Font.NORMAL);
-        PdfPTable UsersTable = new PdfPTable(15);
-        UsersTable.setSpacingBefore(10);
-        UsersTable.setSpacingAfter(10);
-        UsersTable.addCell(new Phrase("№",font));
-        UsersTable.addCell(new Phrase("Имя",font));
-        UsersTable.addCell(new Phrase("Фамилия",font));
-        UsersTable.addCell(new Phrase("Отчество",font));
-        UsersTable.addCell(new Phrase("Возраст",font));
-        UsersTable.addCell(new Phrase("Пол",font));
-        UsersTable.addCell(new Phrase("День Рождения",font));
-        UsersTable.addCell(new Phrase("ИНН",font));
-        UsersTable.addCell(new Phrase("Индекс",font));
-        UsersTable.addCell(new Phrase("Страна",font));
-        UsersTable.addCell(new Phrase("Регион",font));
-        UsersTable.addCell(new Phrase("Город",font));
-        UsersTable.addCell(new Phrase("Улица",font));
-        UsersTable.addCell(new Phrase("Дом",font));
-        UsersTable.addCell(new Phrase("Квартира",font));
-        return UsersTable;
+    public PdfPTable prepareTable(){
+        PdfPTable usersTable = new PdfPTable(15);
+        usersTable.setSpacingBefore(10);
+        usersTable.setSpacingAfter(10);
+        usersTable.addCell(new Phrase("№",font));
+        usersTable.addCell(new Phrase("Имя",font));
+        usersTable.addCell(new Phrase("Фамилия",font));
+        usersTable.addCell(new Phrase("Отчество",font));
+        usersTable.addCell(new Phrase("Возраст",font));
+        usersTable.addCell(new Phrase("Пол",font));
+        usersTable.addCell(new Phrase("День Рождения",font));
+        usersTable.addCell(new Phrase("ИНН",font));
+        usersTable.addCell(new Phrase("Индекс",font));
+        usersTable.addCell(new Phrase("Страна",font));
+        usersTable.addCell(new Phrase("Регион",font));
+        usersTable.addCell(new Phrase("Город",font));
+        usersTable.addCell(new Phrase("Улица",font));
+        usersTable.addCell(new Phrase("Дом",font));
+        usersTable.addCell(new Phrase("Квартира",font));
+        return usersTable;
     }
 }

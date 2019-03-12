@@ -1,4 +1,4 @@
-package com.fintechtinkoff.homework.generateusers;
+package com.fintechtinkoff.homework.Generateusers;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.*;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class HumanFromSite implements AutoCloseable{
+final class HumanFromSite implements AutoCloseable{
     private String gender;
     private Map<String,String> name;
     private Map<Object,Object> location;
@@ -21,18 +21,18 @@ public class HumanFromSite implements AutoCloseable{
         SimpleDateFormat dataFormat = new SimpleDateFormat("YYYY-MM-dd");
         Calendar calendar  = Calendar.getInstance();
         calendar.setTime(dataFormat.parse(dob.get("date")));
-        return Human.createBuilder()
-                .setName(name.get("first"))
-                .setPatronymic("-")
-                .setSurname(name.get("last"))
-                .setGender(gender == "female" ? false : true)
-                .setDataBirth(calendar)
-                .setIndex(String.valueOf(location.get("postcode")))
-                .setCountry((String)location.get("state"))
-                .setCity((String)location.get("city"))
-                .setStreet((String)location.get("street"))
-                .setHouse((int)(Math.random() * 100 + 1))
-                .setApartment((int)(Math.random() * 100 + 1))
+        return Human.builder()
+                .name(name.get("first"))
+                .patronymic("-")
+                .surname(name.get("last"))
+                .gender(gender.equals("female") ? false : true)
+                .dataBirth(calendar)
+                .index(String.valueOf(location.get("postcode")))
+                .country((String)location.get("state"))
+                .city((String)location.get("city"))
+                .street((String)location.get("street"))
+                .house((int)(Math.random() * 100 + 1))
+                .apartment((int)(Math.random() * 100 + 1))
                 .build();
     }
     public void close(){

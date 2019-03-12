@@ -1,4 +1,4 @@
-package com.fintechtinkoff.homework.generateusers;
+package com.fintechtinkoff.homework.Generateusers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +16,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -24,8 +23,8 @@ import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class HumanGenerator {
-    private String pathName = System.getProperty("user.dir") + File.separator + "resources" + File.separator;
+class HumanGenerator {
+    private String pathName = System.getProperty("user.dir") + "\\src\\main\\resources\\".replace("\\",File.separator);
     private Random rnd = new Random();
     private List<String> namesM,namesF,surnamesF,surnamesM,patronymicsM,patronymicsF,countries,regions,cities,streets;
     private int randomUsers = rnd.nextInt(300) + 30;
@@ -45,6 +44,8 @@ public class HumanGenerator {
             System.out.println("Вызвано исключение при работе с файлами = " + fileException.getMessage());
         } catch (DocumentException docException){
             System.out.println("Вызвано исключение при работе с документами = " + docException.getMessage());
+        } catch (NullPointerException e){
+            System.out.println("Вызвано исключение при работе с non null переменной, возможно дата рождения = " + e.getMessage());
         } catch (Exception unknownException){
             System.out.println("Вызвано неизвестное исключение = " + unknownException.getMessage());
         }
@@ -82,6 +83,10 @@ public class HumanGenerator {
             System.out.println("Вызвано исключение при работе с парсингом юзеров = " + parseExcept.getMessage());
         } catch (DocumentException documentExcept){
             System.out.println("Вызвано исключение при работе с документами = " + documentExcept.getMessage());
+        } catch (NullPointerException e){
+            System.out.println("Вызвано исключение при работе с non null переменной, возможно дата рождения = " + e.getMessage());
+        } catch (Exception unknownException){
+            System.out.println("Вызвано неизвестное исключение = " + unknownException.getMessage());
         }
     }
     private List<Human> mappingUsers(String jsonHuman) throws IOException,ParseException{
@@ -112,19 +117,19 @@ public class HumanGenerator {
         int house = rnd.nextInt(200);
         int apartment = rnd.nextInt(99);
         String index = String.valueOf(rnd.nextInt(100000) + 100000);
-        return Human.createBuilder()
-                .setName(name)
-                .setSurname(surName)
-                .setPatronymic(patronymic)
-                .setGender(gender)
-                .setDataBirth(dateBirth)
-                .setIndex(index)
-                .setCountry(country)
-                .setRegion(region)
-                .setCity(city)
-                .setStreet(street)
-                .setHouse(house)
-                .setApartment(apartment)
+        return Human.builder()
+                .name(name)
+                .surname(surName)
+                .patronymic(patronymic)
+                .gender(gender)
+                .dataBirth(dateBirth)
+                .index(index)
+                .country(country)
+                .region(region)
+                .city(city)
+                .street(street)
+                .house(house)
+                .apartment(apartment)
                 .build();
     }
     private void readResourceFiles() throws IOException{

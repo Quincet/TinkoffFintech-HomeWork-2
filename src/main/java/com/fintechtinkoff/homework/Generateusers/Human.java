@@ -1,19 +1,23 @@
-package com.fintechtinkoff.homework.generateusers;
+package com.fintechtinkoff.homework.Generateusers;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Value;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-@NoArgsConstructor
-public class Human {
+@Value
+class Human {
     private String name;
     private String surname;
     private String patronymic;
     private Integer age;
-    private String inn;
+    private String inn = generateINN();
     private Boolean gender;
     private Calendar dataBirth;
     private String index;
@@ -24,8 +28,9 @@ public class Human {
     private Integer house;
     private Integer apartment;
 
-    public Human(String name,String surname,String patronymic,Boolean gender,Calendar dataBirth,String index,
-                 String country,String region,String city,String street,Integer house,Integer apartment){
+    @Builder
+    public Human(String name, String surname, String patronymic, Boolean gender, @NonNull Calendar dataBirth, String index,
+                 String country, String region, String city, String street, Integer house, Integer apartment){
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
@@ -39,11 +44,6 @@ public class Human {
         this.house = house;
         this.apartment = apartment;
         this.age = getAge(dataBirth);
-        this.inn = generateINN();
-    }
-
-    public static HumanBuilder createBuilder(){
-        return new HumanBuilder();
     }
 
     private String generateINN(){
@@ -71,7 +71,7 @@ public class Human {
         int Age = timeRightNow.getWeekYear() - dataBirth.getWeekYear();
         if(dataBirth.get(Calendar.MONTH) > timeRightNow.get(Calendar.MONTH))
             Age--;
-        else if(dataBirth.get(Calendar.MONTH) == timeRightNow.get(Calendar.MONTH)) {
+        else if(timeRightNow.get(Calendar.MONTH) == dataBirth.get(Calendar.MONTH)) {
             if (dataBirth.get(Calendar.DAY_OF_MONTH) > timeRightNow.get(Calendar.DAY_OF_MONTH))
                 Age--;
         }
