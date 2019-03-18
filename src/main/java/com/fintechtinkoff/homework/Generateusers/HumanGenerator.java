@@ -160,15 +160,18 @@ public class HumanGenerator {
                 .build();
     }
     static private void readResourceFiles() throws IOException{
-        namesM = Files.lines(Paths.get(pathName + "Names.txt")).filter(x -> x.contains("Man")).map(x -> x.replace("Man|","")).collect(Collectors.toList());
-        namesF = Files.lines(Paths.get(pathName + "Names.txt")).filter(x -> x.contains("Women")).map(x -> x.replace("Women|","")).collect(Collectors.toList());
-        surnamesF = Files.lines(Paths.get(pathName + "SurNames.txt")).filter(x -> x.contains("Women")).map(x -> x.replace("Women|","")).collect(Collectors.toList());
-        surnamesM = Files.lines(Paths.get(pathName + "SurNames.txt")).filter(x -> x.contains("Man")).map(x -> x.replace("Man|","")).collect(Collectors.toList());
-        patronymicsM = Files.lines(Paths.get(pathName + "Patronymics.txt")).filter(x -> x.contains("Man")).map(x -> x.replace("Man|","")).collect(Collectors.toList());
-        patronymicsF = Files.lines(Paths.get(pathName + "Patronymics.txt")).filter(x -> x.contains("Women")).map(x -> x.replace("Women|","")).collect(Collectors.toList());
-        countries = Files.lines(Paths.get(pathName + "Countries.txt")).collect(Collectors.toList());
-        regions = Files.lines(Paths.get(pathName + "Regions.txt")).collect(Collectors.toList());
-        cities = Files.lines(Paths.get(pathName + "Cities.txt")).collect(Collectors.toList());
-        streets = Files.lines(Paths.get(pathName + "Streets.txt")).collect(Collectors.toList());
+        if(namesM == null | namesF == null | surnamesF == null | surnamesM == null | patronymicsM == null |
+                patronymicsF == null | countries == null | regions == null | cities == null | streets == null) {
+            namesM = Files.lines(Paths.get(pathName + "Names.txt")).filter(x -> x.contains("Man")).map(x -> x.replace("Man|", "")).collect(Collectors.toList());
+            namesF = Files.lines(Paths.get(pathName + "Names.txt")).filter(x -> x.contains("Women")).map(x -> x.replace("Women|", "")).collect(Collectors.toList());
+            surnamesF = Files.lines(Paths.get(pathName + "SurNames.txt")).filter(x -> x.contains("Women")).map(x -> x.replace("Women|", "")).collect(Collectors.toList());
+            surnamesM = Files.lines(Paths.get(pathName + "SurNames.txt")).filter(x -> x.contains("Man")).map(x -> x.replace("Man|", "")).collect(Collectors.toList());
+            patronymicsM = Files.lines(Paths.get(pathName + "Patronymics.txt")).filter(x -> x.contains("Man")).map(x -> x.replace("Man|", "")).collect(Collectors.toList());
+            patronymicsF = Files.lines(Paths.get(pathName + "Patronymics.txt")).filter(x -> x.contains("Women")).map(x -> x.replace("Women|", "")).collect(Collectors.toList());
+            countries = Files.lines(Paths.get(pathName + "Countries.txt")).collect(Collectors.toList());
+            regions = Files.lines(Paths.get(pathName + "Regions.txt")).collect(Collectors.toList());
+            cities = Files.lines(Paths.get(pathName + "Cities.txt")).collect(Collectors.toList());
+            streets = Files.lines(Paths.get(pathName + "Streets.txt")).collect(Collectors.toList());
+        }
     }
 }
