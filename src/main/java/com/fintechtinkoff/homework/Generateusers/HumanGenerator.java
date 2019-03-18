@@ -33,19 +33,18 @@ public class HumanGenerator {
     private static List<String> namesM,namesF,surnamesF,surnamesM,patronymicsM,patronymicsF,countries,regions,cities,streets;
     private static int randomUsers = rnd.nextInt(300) + 30;
 
+    private static List<Human> generateГsers()throws IOException{
+        readResourceFiles();
+        List<Human> listHumans = new ArrayList<>();
+        for (int countUser = 0; countUser <= randomUsers; countUser++)
+            listHumans.add(generateUser());
+        return listHumans;
+    }
     private static void createUsersManually(){
         try {
-            if (!new File(pathName).exists()) {
-                System.out.println("Нет папки с ресурсами для работы программы");
-                return;
-            }
-            readResourceFiles();
-            List<Human> listHumans = new ArrayList<>();
-            for (int countUser = 0; countUser <= randomUsers; countUser++)
-                listHumans.add(generateUser());
-            writeExcelPdf(listHumans);
+            writeExcelPdf(generateГsers());
         } catch (Exception ex){
-            System.out.println("Была вызвана неизвестная ошибка, сообщение будет выведено ниже, будет произведена генерация пользователей оффлайн ");
+            System.out.println("Была вызвана неизвестная ошибка, сообщение будет выведено ниже ");
             ex.printStackTrace();
         }
     }
@@ -66,12 +65,11 @@ public class HumanGenerator {
         try {
             if(!pingHost()){
                 System.out.println("Была вызвана ошибка при работе с HTTP запросом, отсутствует интернет соединение");
-                System.out.println("Будет произведена генерация пользоателей через из базы данных");
+                System.out.println("Будет произведена генерация пользователей через базу данных");
                 generUsersFromDB();
             } else {
                 List<Human> listHumans = mappingUsers(gepRndUsersSite());
                 new DataBaseUtils().insertHumans(listHumans);
-                System.out.println("Пользователи были добавлены в базу данных, всего было добавлено = " + listHumans.size() + " пользователей");
                 writeExcelPdf(listHumans);
             }
         } catch (Exception ex){
@@ -83,13 +81,16 @@ public class HumanGenerator {
     private static void generUsersFromDB(){
         try {
             DataBaseUtils workDB = new DataBaseUtils();
-            if(workDB.checkDataDB()) {
-                System.out.println("База данных содержит в себе данные, будет произведена генерация из неё");
+            Integer numberuserDB = workDB.checkDataDB();
+            if(numberuserDB > 30) {
+                System.out.println("База данных содержит в себе достаточно данных данных, будет произведена генерация из неё");
                 List<Human> listHumans = workDB.selectHumans();
                 writeExcelPdf(listHumans);
-            } else {
-                System.out.println("База данных не содержит в себе данных, будет произведена офлайн генерация");
-                createUsersManually();
+            } else if(numberuserDB >= 0) {
+                System.out.println("База данных не содержит в себе достаточно данных, будет произведена офлайн генерация, а затем добавление в базу данных нагенерированных данных");
+                List<Human> users = generateГsers();
+                workDB.insertHumans(users);
+                writeExcelPdf(users);
             }
         } catch (Exception ex){
             System.out.println("Была вызвана неизвестная ошибка, сообщение будет выведено ниже, будет произведена генерация пользователей оффлайн ");

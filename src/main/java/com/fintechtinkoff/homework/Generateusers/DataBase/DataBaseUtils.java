@@ -71,14 +71,15 @@ public class DataBaseUtils {
                 }
             }
         }
+        System.out.println("Пользователи были добавлены в базу данных, всего было добавлено = " + users.size() + " пользователей");
     }
-    public Boolean checkDataDB()throws SQLException{
-        Boolean haveDBData;
+    public int checkDataDB()throws SQLException{
+        Integer haveDBData;
         try(Connection connection = getConnect(); Statement stmnt = connection.createStatement()) {
             String query = "SELECT COUNT(*) FROM persons JOIN address WHERE persons.address_id=address.id;";
             ResultSet resultSet = stmnt.executeQuery(query);
             resultSet.next();
-            haveDBData = resultSet.getInt(1) > 0 ? true : false;
+            haveDBData = resultSet.getInt(1);
         }
         return haveDBData;
     }
