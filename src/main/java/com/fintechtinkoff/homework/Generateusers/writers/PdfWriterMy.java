@@ -1,5 +1,6 @@
-package com.fintechtinkoff.homework.Generateusers;
+package com.fintechtinkoff.homework.Generateusers.writers;
 
+import com.fintechtinkoff.homework.Generateusers.Human;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -13,12 +14,12 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-final class PdfCreator {
+public final class PdfWriterMy {
     private final String path;
     private final Font font;
     private final SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.forLanguageTag("ru"));
 
-    public PdfCreator(String path)throws IOException,DocumentException{
+    public PdfWriterMy(String path)throws IOException,DocumentException{
         this.path = path;
         font = new Font(BaseFont.createFont( path + "Roboto-Black.ttf",BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED),Font.DEFAULTSIZE,Font.NORMAL);
     }
@@ -34,15 +35,14 @@ final class PdfCreator {
         } catch (FileNotFoundException fileEx){
             System.out.println("При работе создания файла возникла ошибка, pdf файл не был создан");
         }
-
     }
-    public void fillTable(PdfPTable table,Human user, Integer numberUser){
+    public void fillTable(PdfPTable table, Human user, Integer numberUser){
         table.addCell(new Phrase(numberUser.toString(),font));
         table.addCell(new Phrase(user.getName(),font));
         table.addCell(new Phrase(user.getSurname(),font));
         table.addCell(new Phrase(user.getPatronymic(),font));
         table.addCell(new Phrase(user.getAge().toString(),font));
-        table.addCell(new Phrase(user.getGender() ? "Мужчина" : "Женщина",font));
+        table.addCell(new Phrase(user.getGender(),font));
         table.addCell(new Phrase(dataFormat.format(user.getDataBirth().getTime()),font));
         table.addCell(new Phrase(user.getInn(),font));
         table.addCell(new Phrase(user.getIndex(),font));

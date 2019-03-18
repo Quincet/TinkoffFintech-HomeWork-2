@@ -1,9 +1,6 @@
 package com.fintechtinkoff.homework.Generateusers;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.*;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -12,13 +9,14 @@ import java.util.stream.Collectors;
 
 @Getter
 @Value
-class Human {
+@ToString
+public class Human {
     private String name;
     private String surname;
     private String patronymic;
     private Integer age;
-    private String inn = generateINN();
-    private Boolean gender;
+    private String inn;
+    private String gender;
     private Calendar dataBirth;
     private String index;
     private String country;
@@ -29,12 +27,13 @@ class Human {
     private Integer apartment;
 
     @Builder
-    public Human(String name, String surname, String patronymic, Boolean gender, @NonNull Calendar dataBirth, String index,
+    public Human(String name, String surname, String patronymic, String gender, @NonNull Calendar dataBirth,String inn, String index,
                  String country, String region, String city, String street, Integer house, Integer apartment){
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
         this.gender = gender;
+        this.inn = inn == null ? generateINN() : inn;
         this.dataBirth = dataBirth;
         this.index = index;
         this.country = country;

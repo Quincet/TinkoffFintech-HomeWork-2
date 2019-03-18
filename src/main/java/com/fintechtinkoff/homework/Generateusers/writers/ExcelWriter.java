@@ -1,5 +1,6 @@
-package com.fintechtinkoff.homework.Generateusers;
+package com.fintechtinkoff.homework.Generateusers.writers;
 
+import com.fintechtinkoff.homework.Generateusers.Human;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -10,11 +11,11 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-final class ExcelCreator{
+public final class ExcelWriter {
     private final SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.forLanguageTag("ru"));
     private final String path;
 
-    public ExcelCreator(String path){
+    public ExcelWriter(String path){
         this.path = path;
     }
 
@@ -25,7 +26,7 @@ final class ExcelCreator{
         row.createCell(2).setCellValue(user.getSurname());
         row.createCell(3).setCellValue(user.getPatronymic());
         row.createCell(4).setCellValue(user.getAge());
-        row.createCell(5).setCellValue(user.getGender() ? "Мужчина" : "Женщина");
+        row.createCell(5).setCellValue(user.getGender());
         row.createCell(6).setCellValue(dataFormat.format(user.getDataBirth().getTime()));
         row.createCell(7).setCellValue(user.getInn());
         row.createCell(8).setCellValue(user.getIndex());

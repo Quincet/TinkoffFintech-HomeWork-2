@@ -1,6 +1,7 @@
-package com.fintechtinkoff.homework.Generateusers;
+package com.fintechtinkoff.homework.Generateusers.API;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fintechtinkoff.homework.Generateusers.Human;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ import java.util.*;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-final class HumanFromSite implements AutoCloseable{
+public final class HumanFromSite implements AutoCloseable{
     private String gender;
     private Map<String,String> name;
     private Map<Object,Object> location;
@@ -24,8 +25,9 @@ final class HumanFromSite implements AutoCloseable{
         return Human.builder()
                 .name(name.get("first"))
                 .patronymic("-")
+                .region("-")
                 .surname(name.get("last"))
-                .gender(gender.equals("female") ? false : true)
+                .gender(gender.toUpperCase())
                 .dataBirth(calendar)
                 .index(String.valueOf(location.get("postcode")))
                 .country((String)location.get("state"))
