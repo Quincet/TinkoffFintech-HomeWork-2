@@ -81,16 +81,13 @@ public class HumanGenerator {
     private static void generUsersFromDB(){
         try {
             DataBaseUtils workDB = new DataBaseUtils();
-            Integer numberuserDB = workDB.checkDataDB();
-            if(numberuserDB > 30) {
+            if(workDB.checkDataDB() > 30) {
                 System.out.println("База данных содержит в себе достаточно данных данных, будет произведена генерация из неё");
                 List<Human> listHumans = workDB.selectHumans();
                 writeExcelPdf(listHumans);
-            } else if(numberuserDB >= 0) {
-                System.out.println("База данных не содержит в себе достаточно данных, будет произведена офлайн генерация, а затем добавление в базу данных нагенерированных данных");
-                List<Human> users = generateГsers();
-                workDB.insertHumans(users);
-                writeExcelPdf(users);
+            } else {
+                System.out.println("База данных не содержит в себе достаточно данных, будет произведена офлайн генерация");
+                createUsersManually();
             }
         } catch (Exception ex){
             System.out.println("Была вызвана неизвестная ошибка, сообщение будет выведено ниже, будет произведена генерация пользователей оффлайн ");
