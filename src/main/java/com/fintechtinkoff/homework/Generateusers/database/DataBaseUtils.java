@@ -1,4 +1,4 @@
-package com.fintechtinkoff.homework.Generateusers.DataBase;
+package com.fintechtinkoff.homework.Generateusers.database;
 
 
 import com.fintechtinkoff.homework.Generateusers.Human;

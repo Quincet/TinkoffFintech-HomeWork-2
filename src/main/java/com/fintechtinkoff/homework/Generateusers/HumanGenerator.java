@@ -2,8 +2,8 @@ package com.fintechtinkoff.homework.Generateusers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fintechtinkoff.homework.Generateusers.API.HumanFromSite;
-import com.fintechtinkoff.homework.Generateusers.DataBase.DataBaseUtils;
+import com.fintechtinkoff.homework.Generateusers.api.HumanFromSite;
+import com.fintechtinkoff.homework.Generateusers.database.DataBaseUtils;
 import com.fintechtinkoff.homework.Generateusers.writers.ExcelWriter;
 import com.fintechtinkoff.homework.Generateusers.writers.PdfWriterMy;
 import com.itextpdf.text.DocumentException;
@@ -18,7 +18,6 @@ import org.apache.http.util.EntityUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;

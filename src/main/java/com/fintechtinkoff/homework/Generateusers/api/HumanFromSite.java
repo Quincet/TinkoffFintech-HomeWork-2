@@ -1,4 +1,4 @@
-package com.fintechtinkoff.homework.Generateusers.API;
+package com.fintechtinkoff.homework.Generateusers.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fintechtinkoff.homework.Generateusers.Human;
