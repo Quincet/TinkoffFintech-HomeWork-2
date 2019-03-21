@@ -1,4 +1,4 @@
-package com.fintechtinkoff.homework.Generateusers;
+package com.fintechtinkoff.homework.generateusers;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;

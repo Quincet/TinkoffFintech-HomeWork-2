@@ -1,4 +1,4 @@
-package com.fintechtinkoff.homework.Generateusers;
+package com.fintechtinkoff.homework.generateusers;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;

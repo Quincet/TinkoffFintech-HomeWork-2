@@ -1,4 +1,4 @@
-package com.fintechtinkoff.homework.Generateusers;
+package com.fintechtinkoff.homework.generateusers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

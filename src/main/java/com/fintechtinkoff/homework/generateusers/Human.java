@@ -1,4 +1,4 @@
-package com.fintechtinkoff.homework.Generateusers;
+package com.fintechtinkoff.homework.generateusers;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -68,13 +68,13 @@ class Human {
     }
     private int getAge(Calendar dataBirth){
         Calendar timeRightNow = Calendar.getInstance();
-        int Age = timeRightNow.getWeekYear() - dataBirth.getWeekYear();
+        int prepareAge = timeRightNow.getWeekYear() - dataBirth.getWeekYear();
         if(dataBirth.get(Calendar.MONTH) > timeRightNow.get(Calendar.MONTH))
-            Age--;
+            prepareAge--;
         else if(timeRightNow.get(Calendar.MONTH) == dataBirth.get(Calendar.MONTH)) {
             if (dataBirth.get(Calendar.DAY_OF_MONTH) > timeRightNow.get(Calendar.DAY_OF_MONTH))
-                Age--;
+                prepareAge--;
         }
-        return Age;
+        return prepareAge;
     }
 }
