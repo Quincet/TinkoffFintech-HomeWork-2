@@ -119,7 +119,8 @@ public class HumanGenerator {
             HttpGet httpGet = new HttpGet("https://randomuser.me/api/");
             httpClient.execute(httpGet);
             return true;
-        } catch (Exception e){
+        } catch (IOException e){
+            System.out.println("Нет доступа в интернет или сайт не доступен");
             return false;
         }
     }

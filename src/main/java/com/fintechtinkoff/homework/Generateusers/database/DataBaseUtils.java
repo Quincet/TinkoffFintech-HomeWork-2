@@ -61,7 +61,7 @@ public class DataBaseUtils {
     public void insertHumans(List<Human> users)throws SQLException {
         try(Connection connection = getConnect()){
             for(Human user:users){
-                int idIfExist = isUserExist(user,connection);
+                int idIfExist = getIdIfUserExist(user,connection);
                 if (idIfExist > 0) {
                     getQueryAdrssUp(user,idIfExist,connection).executeUpdate();
                     getQueryPersUp(user,idIfExist,connection).executeUpdate();
@@ -84,9 +84,7 @@ public class DataBaseUtils {
         return haveDBData;
     }
     private PreparedStatement getQueryAdrssUp(Human user,Integer idIfExist,Connection conn)throws SQLException{
-        PreparedStatement prpStat = conn.prepareStatement("UPDATE address SET postcode='" + user.getIndex() +
-                "',country=?,region=?,city=?,street=?,house=" + user.getHouse() + ",flat=" + user.getApartment() +
-                " WHERE id=" + idIfExist);
+        PreparedStatement prpStat = conn.prepareStatement(String.format("UPDATE address SET postcode='%d',country=?,region=?,city=?,street=?,house= %d ,flat= %d WHERE id = %d",user.getIndex(),user.getHouse(),user.getApartment(),idIfExist));
         prpStat.setString(1,user.getCountry());
         prpStat.setString(2,user.getRegion());
         prpStat.setString(3,user.getCity());
@@ -94,30 +92,30 @@ public class DataBaseUtils {
         return prpStat;
     }
     private PreparedStatement getQueryPersUp(Human user,Integer idIfExist,Connection conn)throws SQLException{
-        PreparedStatement prpStat = conn.prepareStatement("UPDATE persons SET birthday='"+dataFormat.format(user.getDataBirth().getTime()) + "',gender='"
-                + user.getGender().substring(0,1) + "',inn='" + user.getInn() + "' WHERE id=" + idIfExist + ";");
+        PreparedStatement prpStat = conn.prepareStatement(String.format("UPDATE persons SET birthday='%s',gender='%s',inn='%s' WHERE id= %d;",
+                dataFormat.format(user.getDataBirth().getTime()),user.getGender().substring(0,1).toUpperCase(),user.getInn(),idIfExist));
         return prpStat;
     }
     private PreparedStatement getQueryPersIn(Human user,Connection conn)throws SQLException{
-        PreparedStatement prpStat = conn.prepareStatement("INSERT INTO persons(name,surname,middlename,birthday,gender,inn,address_id) values(?,?,?,'"+dataFormat.format(user.getDataBirth().getTime()) +
-                "','" + user.getGender().substring(0,1).toUpperCase() + "','" + user.getInn() + "',last_insert_id());");
+        PreparedStatement prpStat = conn.prepareStatement(String.format("INSERT INTO persons(name,surname,middlename,birthday,gender,inn,address_id)" +
+                " values(?,?,?,'%s','%s','%s',last_insert_id());",dataFormat.format(user.getDataBirth().getTime()),user.getGender().substring(0,1).toUpperCase(),user.getInn()));
         prpStat.setString(1,user.getName());
         prpStat.setString(2,user.getSurname());
         prpStat.setString(3,user.getPatronymic());
         return prpStat;
     }
     private PreparedStatement getQueryAdrsIn(Human user,Connection conn) throws SQLException{
-        PreparedStatement prpStat = conn.prepareStatement("INSERT INTO address(postcode,country,region,city,street,house,flat) values('" +
-                user.getIndex() + "',?,?,?,?," + user.getHouse() + "," + user.getApartment() + ");");
+        PreparedStatement prpStat = conn.prepareStatement(String.format("INSERT INTO address(postcode,country,region,city,street,house,flat) " +
+                "values('%d',?,?,?,?,%d,%d);",user.getIndex(),user.getHouse(),user.getApartment()));
         prpStat.setString(1,user.getCountry());
         prpStat.setString(2,user.getRegion());
         prpStat.setString(3,user.getCity());
         prpStat.setString(4,user.getStreet());
         return prpStat;
     }
-    private int isUserExist(Human user,Connection conn){
+    private int getIdIfUserExist(Human user,Connection conn){
         try(Statement stmt = conn.createStatement()) {
-            String query = "SELECT id FROM persons WHERE name='" + user.getName() + "' && surname='" + user.getSurname() + "' && middlename='" + user.getPatronymic() + "';";
+            String query = String.format("SELECT id FROM persons WHERE name = '%s' && surname = '%s' && middlename = '%s';",user.getName(),user.getSurname(),user.getPatronymic());
             ResultSet result = stmt.executeQuery(query);
             result.next();
             return result.getInt(1);
