@@ -73,7 +73,7 @@ public class DataBaseUtils {
         }
         System.out.println("Пользователи были добавлены в базу данных, всего было добавлено = " + users.size() + " пользователей");
     }
-    public int checkDataDB()throws SQLException{
+    public int checkHowManyUsers()throws SQLException{
         Integer haveDBData;
         try(Connection connection = getConnect(); Statement stmnt = connection.createStatement()) {
             String query = "SELECT COUNT(*) FROM persons JOIN address WHERE persons.address_id=address.id;";
@@ -84,7 +84,7 @@ public class DataBaseUtils {
         return haveDBData;
     }
     private PreparedStatement getQueryAdrssUp(Human user,Integer idIfExist,Connection conn)throws SQLException{
-        PreparedStatement prpStat = conn.prepareStatement(String.format("UPDATE address SET postcode='%d',country=?,region=?,city=?,street=?,house= %d ,flat= %d WHERE id = %d",user.getIndex(),user.getHouse(),user.getApartment(),idIfExist));
+        PreparedStatement prpStat = conn.prepareStatement(String.format("UPDATE address SET postcode='%s',country=?,region=?,city=?,street=?,house= %d ,flat= %d WHERE id = %d",user.getIndex(),user.getHouse(),user.getApartment(),idIfExist));
         prpStat.setString(1,user.getCountry());
         prpStat.setString(2,user.getRegion());
         prpStat.setString(3,user.getCity());
@@ -106,7 +106,7 @@ public class DataBaseUtils {
     }
     private PreparedStatement getQueryAdrsIn(Human user,Connection conn) throws SQLException{
         PreparedStatement prpStat = conn.prepareStatement(String.format("INSERT INTO address(postcode,country,region,city,street,house,flat) " +
-                "values('%d',?,?,?,?,%d,%d);",user.getIndex(),user.getHouse(),user.getApartment()));
+                "values('%s',?,?,?,?,%d,%d);",user.getIndex(),user.getHouse(),user.getApartment()));
         prpStat.setString(1,user.getCountry());
         prpStat.setString(2,user.getRegion());
         prpStat.setString(3,user.getCity());

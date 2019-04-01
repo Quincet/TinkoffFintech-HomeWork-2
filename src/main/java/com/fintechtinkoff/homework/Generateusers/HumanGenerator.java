@@ -80,7 +80,7 @@ public class HumanGenerator {
     private static void generUsersFromDB(){
         try {
             DataBaseUtils workDB = new DataBaseUtils();
-            if(workDB.checkDataDB() > 30) {
+            if(workDB.checkHowManyUsers() > 30) {
                 System.out.println("База данных содержит в себе достаточно данных данных, будет произведена генерация из неё");
                 List<Human> listHumans = workDB.selectHumans();
                 writeExcelPdf(listHumans);
