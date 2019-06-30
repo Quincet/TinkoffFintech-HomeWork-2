@@ -1,26 +1,36 @@
-package com.fintechtinkoff.homework.Generateusers.writers;
+package com.fintechtinkoff.homework.generateusers.writers;
 
-import com.fintechtinkoff.homework.Generateusers.Human;
+import com.fintechtinkoff.homework.generateusers.human.Human;
+import com.fintechtinkoff.homework.generateusers.utils.Config;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 
-public final class ExcelWriter {
+public final class ExcelWriter implements IWriteHumansToFormat {
     private final SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.forLanguageTag("ru"));
-    private final String path;
 
-    public ExcelWriter(String path){
-        this.path = path;
+    @Override
+    public void writeHumans(List<Human> humans) {
+        HSSFWorkbook sheets = prepareSheet();
+        fillRows(humans,sheets);
+        String fileName = commonDirectory + Config.getProperty("path.excelHuman");
+        try(FileOutputStream fileOut = new FileOutputStream(fileName)) {
+            sheets.write(fileOut);
+            System.out.println("Эксель файл с данными людей был создан по пути = " + Paths.get(fileName).toAbsolutePath());
+        } catch (Exception e) {
+            System.out.println("Не удалось записать Excel файл \n\n");
+            e.printStackTrace();
+        }
     }
 
-    public void fillRow(Human user, Integer numberUser, HSSFSheet sheet){
-        HSSFRow row = sheet.createRow(numberUser);
+    private void fillRow(Human user, Integer numberUser, HSSFWorkbook sheets){
+        HSSFRow row = sheets.getSheet("Humans").createRow(numberUser);
         row.createCell(0).setCellValue(numberUser);
         row.createCell(1).setCellValue(user.getName());
         row.createCell(2).setCellValue(user.getSurname());
@@ -37,7 +47,13 @@ public final class ExcelWriter {
         row.createCell(13).setCellValue(user.getHouse());
         row.createCell(14).setCellValue(user.getApartment());
     }
-    public HSSFWorkbook prepareSheet(){
+    private void fillRows(List<Human> humans, HSSFWorkbook sheets){
+        for(int numberOfHuman = 0; numberOfHuman < humans.size(); numberOfHuman++){
+            fillRow(humans.get(numberOfHuman),numberOfHuman,sheets);
+        }
+    }
+
+    private HSSFWorkbook prepareSheet(){
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Humans");
         HSSFRow rowHead = sheet.createRow((short)0);
@@ -57,16 +73,5 @@ public final class ExcelWriter {
         rowHead.createCell(13).setCellValue("Дом");
         rowHead.createCell(14).setCellValue("Квартира");
         return workbook;
-    }
-    public void createXlsFile(HSSFWorkbook workbook) throws IOException{
-        String fileName = path + "Users.xls";
-        try(FileOutputStream fileOut = new FileOutputStream(fileName)) {
-            workbook.write(fileOut);
-            System.out.println("Эксель файл с данными людей был создан по пути = " + Paths.get(fileName).toAbsolutePath());
-        } catch (IOException ioExcept){
-            System.out.println("При работе создания файла возникла ошибка, excel файл не был создан");
-        } finally {
-            workbook.close();
-        }
     }
 }

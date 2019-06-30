@@ -1,7 +1,9 @@
-package com.fintechtinkoff.homework.Generateusers;
+package com.fintechtinkoff.homework.generateusers.human;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -10,24 +12,61 @@ import java.util.stream.Collectors;
 @Getter
 @Value
 @ToString
+@Entity
+@Table(name="persons")
+@SecondaryTable(name="address",pkJoinColumns =
+        {@PrimaryKeyJoinColumn(name="id")})
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Human {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id",table = "persons")
+    private int id = 0;
+
+    @Column(name = "name",table = "persons")
     private String name;
+
+    @Column(name = "surname",table = "persons")
     private String surname;
+
+    @Column(name = "middlename",table = "persons")
     private String patronymic;
+
+    @Column(name = "age",table = "persons")
     private Integer age;
+
+    @Column(name = "inn",table = "persons")
     private String inn;
+
+    @Column(name = "gender",table = "persons")
     private String gender;
+
+    @Column(name = "birthday",table = "persons")
     private Calendar dataBirth;
+
+    @Column(name = "postcode",table = "address")
     private String index;
+
+    @Column(name = "country",table = "address")
     private String country;
+
+    @Column(name = "region",table = "address")
     private String region;
+
+    @Column(name = "city",table = "address")
     private String city;
+
+    @Column(name = "street",table = "address")
     private String street;
+
+    @Column(name = "house",table = "address")
     private Integer house;
+
+    @Column(name = "flat",table = "address")
     private Integer apartment;
 
     @Builder
-    public Human(String name, String surname, String patronymic, String gender, @NonNull Calendar dataBirth,String inn, String index,
+    public Human(String name, String surname, String patronymic, String gender, @NonNull Calendar dataBirth, String inn, String index,
                  String country, String region, String city, String street, Integer house, Integer apartment){
         this.name = name;
         this.surname = surname;
@@ -44,6 +83,22 @@ public class Human {
         this.apartment = apartment;
         this.age = getAge(dataBirth);
     }
+    private Human(){
+        this.name = null;
+        this.surname = null;
+        this.patronymic = null;
+        this.gender = null;
+        this.inn = null;
+        this.dataBirth = null;
+        this.index = null;
+        this.country = null;
+        this.region = null;
+        this.city = null;
+        this.street = null;
+        this.house = null;
+        this.apartment = null;
+        this.age = null;
+    }
 
     private String generateINN(){
         String region = "77";
@@ -58,6 +113,7 @@ public class Human {
         rezult.add(Integer.valueOf(kontr));
         return String.join("",rezult.stream().map(String::valueOf).collect(Collectors.joining("")));
     }
+
     private String addZero(String str,Integer lng){
         Integer lengt = str.length();
         if (lengt < lng)
@@ -65,6 +121,7 @@ public class Human {
                 str = "0" + str;
         return str;
     }
+
     private int getAge(Calendar dataBirth){
         Calendar timeRightNow = Calendar.getInstance();
         int prepareAge = timeRightNow.getWeekYear() - dataBirth.getWeekYear();

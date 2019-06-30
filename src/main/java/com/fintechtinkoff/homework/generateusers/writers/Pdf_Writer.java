@@ -1,42 +1,42 @@
-package com.fintechtinkoff.homework.Generateusers.writers;
+package com.fintechtinkoff.homework.generateusers.writers;
 
-import com.fintechtinkoff.homework.Generateusers.Human;
+import com.fintechtinkoff.homework.generateusers.human.Human;
+import com.fintechtinkoff.homework.generateusers.utils.Config;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 
-public final class PdfWriterMy {
-    private final String path;
-    private final Font font;
+public final class Pdf_Writer implements IWriteHumansToFormat {
+    private final Font font = new Font(BaseFont.createFont(commonDirectory + Config.getProperty("path.font"),BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED),Font.DEFAULTSIZE,Font.NORMAL);
     private final SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.forLanguageTag("ru"));
 
-    public PdfWriterMy(String path)throws IOException,DocumentException{
-        this.path = path;
-        font = new Font(BaseFont.createFont( path + "Roboto-Black.ttf",BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED),Font.DEFAULTSIZE,Font.NORMAL);
-    }
+    public Pdf_Writer() throws IOException, DocumentException { }
 
-    public void createPdfFile(PdfPTable table) throws DocumentException,IOException {
-        Document document = new Document(PageSize.A1, 10, 10, 10, 10);
-        try(FileOutputStream fileOutputStream = new FileOutputStream(path + "Users.pdf")) {
-            PdfWriter.getInstance(document, fileOutputStream);
+    @Override
+    public void writeHumans(List<Human> humans) {
+        PdfPTable pdfPTable = prepareTable();
+        fillTableManyRows(pdfPTable, humans);
+        String pathToWriteFile = commonDirectory + Config.getProperty("path.pdfHuman");
+        try(FileOutputStream fileOutputStream = new FileOutputStream(pathToWriteFile)) {
+            Document document = new Document(PageSize.A1, 10, 10, 10, 10);
+            com.itextpdf.text.pdf.PdfWriter.getInstance(document, fileOutputStream);
             document.open();
-            document.add(table);
+            document.add(pdfPTable);
             document.close();
-            System.out.println("PDF файл с данными людей был создан по пути = " + Paths.get(path).toAbsolutePath() + File.separator + "Users.pdf");
-        } catch (FileNotFoundException fileEx){
-            System.out.println("При работе создания файла возникла ошибка, pdf файл не был создан");
+            System.out.println("PDF файл с данными людей был создан по пути = " + Paths.get(Config.getProperty("path.pdfHuman")).toAbsolutePath());
+        } catch (Exception e){
+            System.out.println("Не удалось записать PDF файл \n\n");
+            e.printStackTrace();
         }
     }
-    public void fillTable(PdfPTable table, Human user, Integer numberUser){
+    private void fillTableOneRow(PdfPTable table, Human user, Integer numberUser){
         table.addCell(new Phrase(numberUser.toString(),font));
         table.addCell(new Phrase(user.getName(),font));
         table.addCell(new Phrase(user.getSurname(),font));
@@ -53,7 +53,12 @@ public final class PdfWriterMy {
         table.addCell(new Phrase(user.getHouse().toString(),font));
         table.addCell(new Phrase(user.getApartment().toString(),font));
     }
-    public PdfPTable prepareTable(){
+    private void fillTableManyRows(PdfPTable table, List<Human> humans){
+        for(int countHuman = 0; countHuman < humans.size(); countHuman++){
+            fillTableOneRow(table, humans.get(countHuman),countHuman);
+        }
+    }
+    private PdfPTable prepareTable(){
         PdfPTable usersTable = new PdfPTable(15);
         usersTable.setSpacingBefore(10);
         usersTable.setSpacingAfter(10);

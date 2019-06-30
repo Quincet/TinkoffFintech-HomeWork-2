@@ -48,11 +48,22 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.15</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
         <dependency>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>1.6.0</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.3.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>4.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13-beta-1</version>
         </dependency>
     </dependencies>
 
@@ -72,7 +83,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
-                    <mainClass>com.fintechtinkoff.homework.Generateusers.Main</mainClass>
+                    <mainClass>com.fintechtinkoff.homework.generateusers.Main</mainClass>
                     <cleanupDaemonThreads>false</cleanupDaemonThreads>
                 </configuration>
             </plugin>
@@ -84,7 +95,7 @@
                     <transformers>
                         <transformer
                                 implementation= "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <mainClass>com.fintechtinkoff.homework.Generateusers.Main</mainClass>
+                            <mainClass>com.fintechtinkoff.homework.generateusers.Main</mainClass>
                         </transformer>
                     </transformers>
                 </configuration>
