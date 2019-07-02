@@ -1,5 +1,4 @@
 # TinkoffFintech-HomeWork-2
-<<<<<<< HEAD
 Дз по лекции 5
 ***
 Программа создает два файла в папке resources и заносит данные пользователей в базу данных, один файл с расширением .xls(excel), другой .pdf.   
@@ -40,4 +39,3 @@ JRE_HOME : %JAVA_HOME%\jre
 CLASSPATH : .;%JAVA_HOME%\lib;%JAVA_HOME%\jre\lib  
 PATH : %JAVA_HOME%\bin  
 PATH : С:\Maven\bin  
->>>>>>> master
