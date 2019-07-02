@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 public class HumanManualFactory implements IHumanFactory{
     private static List<String> namesM,namesF,surnamesF,surnamesM,patronymicsM,patronymicsF,countries,regions,cities,streets;
@@ -16,23 +16,38 @@ public class HumanManualFactory implements IHumanFactory{
     public HumanManualFactory()throws IOException{
         if(namesM == null | namesF == null | surnamesF == null | surnamesM == null | patronymicsM == null |
             patronymicsF == null | countries == null | regions == null | cities == null | streets == null) {
-            namesM = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.names")))
-                    .filter(x -> x.contains("Man")).map(x -> x.replace("Man|", "")).collect(Collectors.toList());
+            Stream<String> fileNames = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.names")));
+            Stream<String> fileSurNames = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.surnames")));
+            Stream<String> filePatronymics = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.patronymics")));
+            namesM = fileNames
+                    .filter(x -> x.contains("Man"))
+                    .map(x -> x.replace("Man|", ""))
+                    .collect(Collectors.toList());
 
-            namesF = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.names")))
-                    .filter(x -> x.contains("Women")).map(x -> x.replace("Women|", "")).collect(Collectors.toList());
+            namesF = fileNames
+                    .filter(x -> x.contains("Women"))
+                    .map(x -> x.replace("Women|", ""))
+                    .collect(Collectors.toList());
 
-            surnamesF = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.surnames")))
-                    .filter(x -> x.contains("Women")).map(x -> x.replace("Women|", "")).collect(Collectors.toList());
+            surnamesF = fileSurNames
+                    .filter(x -> x.contains("Women"))
+                    .map(x -> x.replace("Women|", ""))
+                    .collect(Collectors.toList());
 
-            surnamesM = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.surnames")))
-                    .filter(x -> x.contains("Man")).map(x -> x.replace("Man|", "")).collect(Collectors.toList());
+            surnamesM = fileSurNames
+                    .filter(x -> x.contains("Man"))
+                    .map(x -> x.replace("Man|", ""))
+                    .collect(Collectors.toList());
 
-            patronymicsM = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.patronymics")))
-                    .filter(x -> x.contains("Man")).map(x -> x.replace("Man|", "")).collect(Collectors.toList());
+            patronymicsM = filePatronymics
+                    .filter(x -> x.contains("Man"))
+                    .map(x -> x.replace("Man|", ""))
+                    .collect(Collectors.toList());
 
-            patronymicsF = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.patronymics")))
-                    .filter(x -> x.contains("Women")).map(x -> x.replace("Women|", "")).collect(Collectors.toList());
+            patronymicsF = filePatronymics
+                    .filter(x -> x.contains("Women"))
+                    .map(x -> x.replace("Women|", "")).
+                            collect(Collectors.toList());
 
             countries = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.countries")))
                     .collect(Collectors.toList());
