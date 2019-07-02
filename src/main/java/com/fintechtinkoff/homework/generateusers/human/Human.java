@@ -1,19 +1,10 @@
-<<<<<<< HEAD:src/main/java/com/fintechtinkoff/homework/generateusers/human/Human.java
 package com.fintechtinkoff.homework.generateusers.human;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-=======
-package com.fintechtinkoff.homework.generateusers;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
->>>>>>> master:src/main/java/com/fintechtinkoff/homework/generateusers/Human.java
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -50,15 +41,11 @@ public class Human {
 
     @Column(name = "birthday",table = "persons")
     private Calendar dataBirth;
-<<<<<<< HEAD:src/main/java/com/fintechtinkoff/homework/generateusers/human/Human.java
 
     @Column(name = "postcode",table = "address")
     private String index;
 
     @Column(name = "country",table = "address")
-=======
-    private String index;
->>>>>>> master:src/main/java/com/fintechtinkoff/homework/generateusers/Human.java
     private String country;
 
     @Column(name = "region",table = "address")
@@ -76,14 +63,9 @@ public class Human {
     @Column(name = "flat",table = "address")
     private Integer apartment;
 
-<<<<<<< HEAD:src/main/java/com/fintechtinkoff/homework/generateusers/human/Human.java
     @Builder
     public Human(String name, String surname, String patronymic, String gender, @NonNull Calendar dataBirth, String inn, String index,
                  String country, String region, String city, String street, Integer house, Integer apartment){
-=======
-    public Human(String name,String surname,String patronymic,Boolean gender,Calendar dataBirth,String index,
-                 String country,String region,String city,String street,Integer house,Integer apartment){
->>>>>>> master:src/main/java/com/fintechtinkoff/homework/generateusers/Human.java
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
