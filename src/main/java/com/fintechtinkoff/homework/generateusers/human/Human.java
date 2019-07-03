@@ -125,8 +125,8 @@ public class Human {
         int prepareAge = timeRightNow.getWeekYear() - dataBirth.getWeekYear();
         if(dataBirth.get(Calendar.MONTH) > timeRightNow.get(Calendar.MONTH))
             prepareAge--;
-        else if(timeRightNow.get(Calendar.MONTH) == dataBirth.get(Calendar.MONTH)) {
-            if (dataBirth.get(Calendar.DAY_OF_MONTH) > timeRightNow.get(Calendar.DAY_OF_MONTH))
+        else if(timeRightNow.get(Calendar.MONTH) == dataBirth.get(Calendar.MONTH) &&
+                dataBirth.get(Calendar.DAY_OF_MONTH) > timeRightNow.get(Calendar.DAY_OF_MONTH)) {
                 prepareAge--;
         }
         return prepareAge;

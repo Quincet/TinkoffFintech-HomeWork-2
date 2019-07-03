@@ -14,4 +14,5 @@ public class SessionHelper {
                 .buildSessionFactory()
                 .openSession();
     }
+    private SessionHelper(){}
 }

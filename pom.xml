@@ -92,16 +92,12 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
-<<<<<<< HEAD
                     <transformers>
                         <transformer
                                 implementation= "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                             <mainClass>com.fintechtinkoff.homework.generateusers.Main</mainClass>
                         </transformer>
                     </transformers>
-=======
-                    <mainClass>com.fintechtinkoff.homework.generateusers.Main</mainClass>
->>>>>>> master
                 </configuration>
                 <executions>
                     <execution>

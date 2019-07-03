@@ -22,7 +22,7 @@ public final class HumanApi{
 
     public Human toHuman()
             throws ParseException {
-        SimpleDateFormat dataFormat = new SimpleDateFormat("YYYY-MM-dd");
+        SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar  = Calendar.getInstance();
         calendar.setTime(dataFormat.parse(dob.get("date")));
         return Human.builder()

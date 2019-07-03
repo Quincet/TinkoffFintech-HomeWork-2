@@ -26,7 +26,7 @@ public class HumanDataBaseFactory implements IHumanFactory {
         criteria.from(Human.class);
         List<Human> data = session.createQuery(criteria).setMaxResults(countHumans).getResultList();
         Collections.shuffle(data);
-        if(data.size() == 0)
+        if(data.isEmpty())
             throw new SQLException();
         return data;
     }

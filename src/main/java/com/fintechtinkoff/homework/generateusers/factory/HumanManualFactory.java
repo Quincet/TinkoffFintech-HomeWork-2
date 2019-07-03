@@ -10,15 +10,22 @@ import java.util.*;
 import java.util.stream.*;
 
 public class HumanManualFactory implements IHumanFactory{
-    private static List<String> namesM,namesF,surnamesF,surnamesM,patronymicsM,patronymicsF,countries,regions,cities,streets;
+    private static List<String> namesM;
+    private static List<String> namesF;
+    private static List<String> surnamesF;
+    private static List<String> surnamesM;
+    private static List<String> patronymicsM;
+    private static List<String> patronymicsF;
+    private static List<String> countries;
+    private static List<String> regions;
+    private static List<String> cities;
+    private static List<String> streets;
     private static String commonDirectory = System.getProperty("user.dir");
 
-    public HumanManualFactory()throws IOException{
-        if(namesM == null | namesF == null | surnamesF == null | surnamesM == null | patronymicsM == null |
-            patronymicsF == null | countries == null | regions == null | cities == null | streets == null) {
-            Stream<String> fileNames = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.names")));
-            Stream<String> fileSurNames = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.surnames")));
-            Stream<String> filePatronymics = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.patronymics")));
+    static {
+        try (Stream<String> fileNames = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.names")));
+             Stream<String> fileSurNames = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.surnames")));
+             Stream<String> filePatronymics = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.patronymics")))) {
             namesM = fileNames
                     .filter(x -> x.contains("Man"))
                     .map(x -> x.replace("Man|", ""))
@@ -60,6 +67,8 @@ public class HumanManualFactory implements IHumanFactory{
 
             streets = Files.lines(Paths.get(commonDirectory + Config.getProperty("path.streets")))
                     .collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
