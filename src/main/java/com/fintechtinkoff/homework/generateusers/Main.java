@@ -3,7 +3,9 @@ package com.fintechtinkoff.homework.generateusers;
 
 import com.fintechtinkoff.homework.generateusers.factory.*;
 import com.fintechtinkoff.homework.generateusers.human.Human;
+import com.fintechtinkoff.homework.generateusers.utils.LoggerHelper;
 import com.fintechtinkoff.homework.generateusers.writers.*;
+import org.junit.Test;
 
 import java.util.*;
 
@@ -14,7 +16,7 @@ public class Main  {
         List<Human> humans;
         DataBaseWriter dataBaseWriter = new DataBaseWriter();
         ExcelWriter excelWriter = new ExcelWriter();
-        Pdf_Writer pdfwriter = new Pdf_Writer();
+        PDFWriter pdfwriter = new PDFWriter();
         Random rnd = new Random();
         try {
             humanFactory = new HumanWebFactory();

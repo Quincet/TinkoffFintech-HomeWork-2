@@ -5,7 +5,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class SessionHelper {
-    public static Session getSeesion(){
+    public static Session getSession() {
         return new MetadataSources(
                 new StandardServiceRegistryBuilder()
                 .configure()
@@ -14,5 +14,5 @@ public class SessionHelper {
                 .buildSessionFactory()
                 .openSession();
     }
-    private SessionHelper(){}
+    private SessionHelper() { }
 }

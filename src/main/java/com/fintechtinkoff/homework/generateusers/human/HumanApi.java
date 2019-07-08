@@ -12,13 +12,13 @@ import java.util.Map;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class HumanApi{
+public final class HumanApi {
     private String gender;
-    private Map<String,String> name;
-    private Map<Object,Object> location;
-    private Map<String,String> dob;
+    private Map<String, String> name;
+    private Map<Object, Object> location;
+    private Map<String, String> dob;
 
-    private HumanApi(){}
+    private HumanApi() { }
 
     public Human toHuman()
             throws ParseException {
@@ -33,11 +33,11 @@ public final class HumanApi{
                 .gender(gender.toUpperCase())
                 .dataBirth(calendar)
                 .index(String.valueOf(location.get("postcode")))
-                .country((String)location.get("state"))
-                .city((String)location.get("city"))
-                .street((String)location.get("street"))
-                .house((int)(Math.random() * 100 + 1))
-                .apartment((int)(Math.random() * 100 + 1))
+                .country((String) location.get("state"))
+                .city((String) location.get("city"))
+                .street((String) location.get("street"))
+                .house((int) (Math.random() * 100 + 1))
+                .apartment((int) (Math.random() * 100 + 1))
                 .build();
     }
 }

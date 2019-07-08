@@ -6,14 +6,14 @@ import org.hibernate.Session;
 
 import java.util.List;
 
-public class DataBaseWriter implements IWriteHumansToFormat{
+public final class DataBaseWriter implements IWriteHumansToFormat {
     @Override
-    public void writeHumans(List<Human> humans) {
-        try(Session session = SessionHelper.getSeesion()) {
+    public void writeHumans(final List<Human> humans) {
+        try (Session session = SessionHelper.getSession()) {
             for (Human human : humans) {
                 session.save(human);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Не удалось записать данные в базу данных \n\n");
             e.printStackTrace();
         }

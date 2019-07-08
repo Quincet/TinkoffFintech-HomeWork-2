@@ -10,24 +10,28 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-public class HumanDataBaseFactory implements IHumanFactory {
+public final class HumanDataBaseFactory implements IHumanFactory {
     @Override
     public Human createHuman()
-            throws Exception{
+            throws SQLException {
         return createHumans(1).get(0);
     }
 
     @Override
     public List<Human> createHumans(int countHumans)
-            throws Exception{
-        Session session = SessionHelper.getSeesion();
+            throws SQLException {
+        Session session = SessionHelper.getSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Human> criteria = builder.createQuery(Human.class);
         criteria.from(Human.class);
-        List<Human> data = session.createQuery(criteria).setMaxResults(countHumans).getResultList();
+        List<Human> data = session
+                .createQuery(criteria)
+                .setMaxResults(countHumans)
+                .getResultList();
         Collections.shuffle(data);
-        if(data.isEmpty())
+        if (data.isEmpty()) {
             throw new SQLException();
+        }
         return data;
     }
 }

@@ -17,27 +17,39 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HumanWebFactory implements IHumanFactory {
+public final class HumanWebFactory implements IHumanFactory {
     @Override
     public Human createHuman() throws Exception {
         return createHumans(1).get(0);
     }
 
     @Override
-    public List<Human> createHumans(int countHumans) throws Exception{
+    public List<Human> createHumans(int countHumans)
+            throws Exception {
         URIBuilder uriBuilder = new URIBuilder("https://randomuser.me/api/");
-        uriBuilder.addParameter("results", String.valueOf(countHumans)).addParameter("noinfo", "").addParameter("inc", "gender,name,location,dob");
-        HttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(RequestConfig.custom().setConnectTimeout(30 * 1000).build()).build();
+        uriBuilder.addParameter("results",
+                String.valueOf(countHumans))
+                .addParameter("noinfo", "")
+                .addParameter("inc", "gender,name,location,dob");
+        HttpClient httpClient = HttpClientBuilder.create()
+                .setDefaultRequestConfig(
+                        RequestConfig.custom()
+                        .setConnectTimeout(30 * 1000)
+                        .build())
+                .build();
         HttpGet httpGet = new HttpGet(uriBuilder.build());
         HttpResponse httpResponse = httpClient.execute(httpGet);
         return mappingUsers(EntityUtils.toString(httpResponse.getEntity()));
     }
 
-    private List<Human> mappingUsers(String jsonHuman) throws IOException, ParseException {
+    private List<Human> mappingUsers(String jsonHuman)
+            throws IOException, ParseException {
         ObjectMapper mapper = new ObjectMapper();
         List<Human> randomUsers = new ArrayList<>();
-        for(JsonNode jsonNode: mapper.readTree(jsonHuman).findValue("results")){
-            HumanApi humanRandomUser = mapper.readValue(jsonNode.toString(), HumanApi.class);
+        JsonNode tree = mapper.readTree(jsonHuman);
+        for (JsonNode jsonNode : tree.findValue("results")) {
+            HumanApi humanRandomUser = mapper
+                    .readValue(jsonNode.toString(), HumanApi.class);
             randomUsers.add(humanRandomUser.toHuman());
         }
         return randomUsers;
